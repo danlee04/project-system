@@ -39,7 +39,8 @@ class Members extends Component
         $info = Member::where('id', $id)->first();
 
         if (isset($info)) {
-            $this->memberID           = $id;
+            $this->memberID            = $id;
+            $this->forUpdate           = true;
             $this->first_name          = $info->first_name;
             $this->middle_name         = $info->middle_name;
             $this->last_name           = $info->last_name;
@@ -74,7 +75,7 @@ class Members extends Component
                     'address'        => $this->address,
                 ];
 
-                $update = Member::where('id', $this->sessionID)
+                $update = Member::where('id', $this->memberID)
                     ->update($data);
                 if ($update) {
                     $this->alert('success', $this->first_name . ' ' . $this->last_name . ' has been updated', ['toast' => false, 'position' => 'center']);
